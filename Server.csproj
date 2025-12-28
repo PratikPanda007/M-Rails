@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.21" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+	</ItemGroup>
+
+	<!-- OPTIONAL: You do NOT need this -->
+	<!-- <ItemGroup>
+    <None Include="M-Rails.sln" />
+  </ItemGroup> -->
+
+	<!-- Ensure wwwroot exists -->
+	<ItemGroup>
+		<Folder Include="wwwroot\" />
+	</ItemGroup>
+
+	<!-- 🔥 AUTO COPY VITE DIST TO WWWROOT -->
+	<Target Name="CopyViteDist" AfterTargets="Build">
+		<ItemGroup>
+			<ViteDist Include="ClientApp\dist\**\*" />
+		</ItemGroup>
+
+		<Copy
+		  SourceFiles="@(ViteDist)"
+		  DestinationFiles="@(ViteDist->'wwwroot\%(RecursiveDir)%(Filename)%(Extension)')"
+		  SkipUnchangedFiles="true" />
+	</Target>
+
+</Project>
