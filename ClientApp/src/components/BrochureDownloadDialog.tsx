@@ -9,6 +9,7 @@ import { z } from "zod";
 const formSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
     email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+    phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(15, "Phone number must be less than 15 digits").regex(/^[0-9+\-\s]+$/, "Invalid phone number"),
 });
 
 const RESEND_COOLDOWN = 30; // seconds
@@ -20,10 +21,10 @@ interface BrochureDownloadDialogProps {
 
 const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogProps) => {
   const [step, setStep] = useState<"form" | "otp">("form");
-    const [formData, setFormData] = useState({ name: "", email: "" });
+    const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [otp, setOtp] = useState("");
   //const [generatedOtp, setGeneratedOtp] = useState("");
-    const [errors, setErrors] = useState<{ name?: string; email?: string; otp?: string }>({});
+    const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; otp?: string }>({});
     const [resendCountdown, setResendCountdown] = useState(0);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -57,10 +58,11 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
 
         const result = formSchema.safeParse(formData);
         if (!result.success) {
-            const fieldErrors: { name?: string; email?: string } = {};
+            const fieldErrors: { name?: string; email?: string; phone?: string } = {};
             result.error.errors.forEach((err) => {
                 if (err.path[0] === "name") fieldErrors.name = err.message;
                 if (err.path[0] === "email") fieldErrors.email = err.message;
+                if (err.path[0] === "phone") fieldErrors.phone = err.message;
             });
             setErrors(fieldErrors);
             return;
@@ -134,6 +136,8 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
                 body: JSON.stringify({
                     email: formData.email,
                     otp: otp,
+                    name: formData.name,
+                    phone: formData.phone,
                 }),
             });
 
@@ -165,7 +169,7 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
   const handleClose = () => {
       onOpenChange(false);
     setStep("form");
-      setFormData({ name: "", email: "" });
+      setFormData({ name: "", email: "", phone: "" });
     setOtp("");
     //setGeneratedOtp("");
     setErrors({});
@@ -206,6 +210,17 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
               {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                />
+                {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
             </div>
             <Button type="submit" className="w-full">
               Send OTP

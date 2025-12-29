@@ -27,10 +27,7 @@
 			<ViteDist Include="ClientApp\dist\**\*" />
 		</ItemGroup>
 
-		<Copy
-		  SourceFiles="@(ViteDist)"
-		  DestinationFiles="@(ViteDist->'wwwroot\%(RecursiveDir)%(Filename)%(Extension)')"
-		  SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(ViteDist)" DestinationFiles="@(ViteDist->'wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
 	</Target>
 
 </Project>

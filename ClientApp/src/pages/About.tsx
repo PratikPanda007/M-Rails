@@ -68,7 +68,7 @@ const About = () => {
             <Card className="text-center">
               <CardContent className="p-6 space-y-2">
                 <div className="text-4xl font-bold text-primary">32+</div>
-                <p className="text-muted-foreground">Railing Accessories</p>
+                <p className="text-muted-foreground">Aluminium Handrails</p>
               </CardContent>
             </Card>
             <Card className="text-center">
@@ -121,7 +121,7 @@ const About = () => {
           <Card className="bg-gradient-primary">
             <CardContent className="p-8">
               <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
-                LARGEST RANGE OF ALUMINIUM & STAINLESS STEEL SYSTEMS
+                LARGEST RANGE OF Aluminium Railing Systems
               </h2>
               <p className="text-xl text-primary-foreground/90">
                 100% Weather Proof Systems
