@@ -205,19 +205,19 @@ namespace Server.Controllers
     //    public string Message { get; set; } = string.Empty;
     //}
 
-    //public class EmailSettings
-    //{
-    //    public string From { get; set; } = string.Empty;
-    //    public string Password { get; set; } = string.Empty;
-    //    public string Host { get; set; } = string.Empty;
-    //    public int Port { get; set; }
-    //}
+    public class EmailSettings
+    {
+        public string From { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Host { get; set; } = string.Empty;
+        public int Port { get; set; }
+    }
 
-    //public class OtpSettings
-    //{
-    //    public int ExpiryMinutes { get; set; }
-    //    public int MaxAttempts { get; set; }
-    //}
+    public class OtpSettings
+    {
+        public int ExpiryMinutes { get; set; }
+        public int MaxAttempts { get; set; }
+    }
 
     //public class VerifyOtpRequest
     //{

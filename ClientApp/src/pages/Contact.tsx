@@ -324,7 +324,7 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
                       name="message"
@@ -334,6 +334,7 @@ const Contact = () => {
                       rows={4}
                       maxLength={180}
                       className="bg-background resize-none"
+                      required
                     />
                     <p className="text-xs text-muted-foreground text-right">{formData.message.length} / 180</p>
                   </div>
